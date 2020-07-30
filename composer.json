@@ -1,0 +1,16 @@
+{
+    "name": "kamiljakubczak/hero",
+    "description": "eMAG's HERO game",
+    "authors": [
+        {
+            "name": "Kamil Jakubczak",
+            "email": "kamiljakubczak@outlook.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+	    "psr-4": {
+		    "HERO\\":  "src/"
+	    }
+    }
+}
