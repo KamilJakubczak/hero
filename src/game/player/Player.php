@@ -106,7 +106,7 @@ abstract class Player implements iPlayer {
      *
      * @return void
      */
-    public function displayStatistics() {
+    public function displayStatistics():void {
         echo "<h2>{$this->name}</h2>";
         echo "<h3>Statistics:</h3>";
         foreach(static::properties as $name=>$values) {
@@ -120,13 +120,12 @@ abstract class Player implements iPlayer {
      * @param  array $properties
      * @return void
      */
-    protected function setProperties(array $properties) {
+    protected function setProperties(array $properties):void {
         foreach($properties as $property=>$values) {
             $this->$property = rand($values['min'], $values['max']);
 
         }
     }
-
     
     /**
      * displayMessage

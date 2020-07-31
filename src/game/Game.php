@@ -30,7 +30,7 @@ class Game {
     }    
 
     /**
-     * setOrderus
+     * Set orderus player object
      *
      * @param  object $orderus
      * @return void
@@ -40,7 +40,7 @@ class Game {
     }    
 
     /**
-     * getAttacker
+     * Get attacker
      *
      * @return object
      */
@@ -49,7 +49,7 @@ class Game {
     }    
 
     /**
-     * setEnemy
+     * Set enemy
      *
      * @param  object $enemy
      * @return void
@@ -59,7 +59,7 @@ class Game {
     }
     
     /**
-     * getDefender
+     * Get defender
      *
      * @return object
      */
@@ -68,7 +68,7 @@ class Game {
     }
     
     /**
-     * displayFirst
+     * Display first player who will start the battle
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class Game {
     }    
 
     /**
-     * setWinner
+     * Set winner
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class Game {
         }
     }    
     /**
-     * getWinner
+     * Get winner
      *
      * @return object
      */
@@ -116,7 +116,7 @@ class Game {
     }    
 
     /**
-     * displayMessage
+     * Display message
      *
      * @param  string $message
      * @return void
@@ -126,7 +126,7 @@ class Game {
     }    
 
     /**
-     * displayResult
+     * Display result of the battle
      *
      * @return void
      */
@@ -139,7 +139,7 @@ class Game {
     }
     
     /**
-     * displayStatistics
+     * Display players' statistics
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class Game {
     }
     
     /**
-     * displayRound
+     * Display round number
      *
      * @return void
      */
@@ -158,7 +158,7 @@ class Game {
     }
     
     /**
-     * displayAction
+     * Display action
      *
      * @return void
      */
@@ -167,7 +167,7 @@ class Game {
     }
         
     /**
-     * attact
+     * Perform attack between players
      *
      * @return void
      */
@@ -175,8 +175,10 @@ class Game {
 
         $luck = $this->defender->getLuck();
         $generatedLuck = $this->defender::generateLuck();
+
         $defenderName = $this->defender->getName();
         $defenderHealth = $this->defender->getHealth();
+
         if(!$this->miss($luck, $generatedLuck)) {
             $damage = $this->damage($this->attacker,$this->defender);
             $damageTaken = $this->defender->hit($damage);
@@ -206,6 +208,7 @@ class Game {
             return false;
         }
     }    
+
     /**
      * Check if player is lucky at current action
      *
@@ -221,6 +224,14 @@ class Game {
         }
 
     }
+        
+    /**
+     * Calculate damage
+     *
+     * @param  object $attacker
+     * @param  object $defender
+     * @return int
+     */
     private function damage(object $attacker, object $defender): int {
         $attack = $attacker->getDamage();
         $defence = $defender->getDefence();
@@ -245,7 +256,7 @@ class Game {
 
     
     /**
-     * compareSpeed
+     * Set first attacker based on speed property
      *
      * @return void
      */
@@ -265,7 +276,7 @@ class Game {
     }
   
     /**
-     * compareLuck
+     * Set first attacker base on luck property
      *
      * @return void
      */
@@ -291,7 +302,7 @@ class Game {
     }
 
     /**
-     * setAttacker
+     * Set attacker
      *
      * @param  object $player
      * @return void
@@ -302,7 +313,7 @@ class Game {
     }
     
     /**
-     * setDefender
+     * Set defender
      *
      * @param  mixed $plyer
      * @return void
@@ -313,7 +324,7 @@ class Game {
     }
     
     /**
-     * changeAttacker
+     * Change attacker
      *
      * @return void
      */
@@ -323,18 +334,26 @@ class Game {
         $this->attacker = $temp;
     }    
     /**
-     * updateRoundCount
+     * Update round count
      *
      * @return void
      */
     private function updateRoundCount(): void {
         $this->roundCount +=1;
-    }    
+    }  
+          
+    /**
+     * Set round counter
+     *
+     * @param  int $count
+     * @return void
+     */
     public function setRoundCounter(int $count): void {
         $this->roundCount = $count;
     }
+
     /**
-     * isWinner
+     * Return true if winner is known or false if not
      *
      * @return bool
      */

@@ -27,7 +27,13 @@ class WildBeast extends Player {
             'max'=>40
         ]
     ];
-
+    
+    /**
+     * __construct
+     *
+     * @param  array $properties
+     * @return void
+     */
     public function __construct(array $properties=null) {
         $this->name = self::name;
         if(is_null($properties)){

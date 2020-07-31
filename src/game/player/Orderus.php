@@ -29,14 +29,28 @@ class Orderus extends Player {
     ];
     private const rapidStrikeChance = 10;
     private const magicShieldChance = 20;
-
-    public function __construct($properties=null) {
+    
+    /**
+     * __construct
+     *
+     * @param  array $properties
+     * @return void
+     */
+    public function __construct(array $properties=null) {
         $this->name = self::name;
         if(is_null($properties)){
             $properties = self::properties;
         }
         $this->setProperties($properties);
     }
+        
+    /**
+     * Return if skill can be used at current turn
+     *
+     * @param  int $luck
+     * @param  int $chance
+     * @return void
+     */
     private function isSkillUsable(int $luck, int $chance) {
         if($luck <= $chance) {
             return true;
@@ -44,6 +58,13 @@ class Orderus extends Player {
             return false;
         }
     }
+
+        
+    /**
+     * Calculate and return damage taken damage
+     *
+     * @return int
+     */
     public function getDamage(): int {
 
         $luck = $this->generateLuck();
@@ -58,6 +79,13 @@ class Orderus extends Player {
       
         return $damage;
     }
+        
+    /**
+     * Calculate and return given damage
+     *
+     * @param  mixed $damage
+     * @return float
+     */
     public function hit(int $damage): float {
         $luck = $this->generateLuck();
         $magicShieldChance = static::magicShieldChance;
@@ -71,10 +99,23 @@ class Orderus extends Player {
         return $damage;
 
     }
+        
+    /**
+     * Return rapid strike extra damage
+     *
+     * @return int
+     */
     private function rapidStrike(): int {
            
         return $this->strength;
     }
+        
+    /**
+     * Return decreased damage by magic shield skill
+     *
+     * @param  mixed $damage
+     * @return float
+     */
     private function magicShield(int $damage): float {
         if($damage > 0) {
             return $damage/2;
@@ -82,7 +123,13 @@ class Orderus extends Player {
             return $damage;
         }
     }
-
+    
+    /**
+     * Display who used what kind of skill
+     *
+     * @param  string $skillName
+     * @return void
+     */
     private function displaySkill(string $skillName): void {
         echo "{$this->name} has used {$skillName}<br>";
     }
