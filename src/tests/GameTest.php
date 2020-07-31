@@ -67,5 +67,210 @@ final class GameTest extends TestCase {
         ];
         $result = $this->invokeMethod($this->game, 'miss', $params);
         $this->assertFalse($result);
+       
+    }
+
+    public function testMissNotfication(): void {
+        $properties = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>0,
+                'max'=>0
+            ],
+            'luck'=>[
+                'min'=>100,
+                'max'=>100
+            ]
+        ];
+        $orderus = new Orderus($properties);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setFirst();
+        $game->attact();
+
+        $this->expectOutputString('miss');
+    }
+
+    public function testSetFirstAttackerBasedOnSpeed(): void {
+        $properties = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>100,
+                'max'=>100
+            ]
+        ];
+        $properties2 = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>0,
+                'max'=>0
+            ],
+            'luck'=>[
+                'min'=>100,
+                'max'=>100
+            ]
+        ];
+
+        $orderus = new Orderus($properties);
+        $enemy = new WildBeast($properties2);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setEnemy($enemy);
+        $game->setFirst();
+        $result = $game->getAttacker();
+        $name = $result->getName();
+        $this->assertEquals('Orderus', $name);
+
+    }
+    public function testSetFirstAttackerBasedOnLuck(): void {
+        $properties = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        $properties2 = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>100,
+                'max'=>100
+            ]
+        ];
+
+        $orderus = new Orderus($properties);
+        $enemy = new WildBeast($properties2);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setEnemy($enemy);
+        $game->setFirst();
+        $result = $game->getAttacker();
+        $name = $result->getName();
+        $this->assertEquals('Wild Beast', $name);
+
+    }
+    public function testSetFirstAttackerWhenDraw(): void {
+        $properties = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        $properties2 = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+
+        $orderus = new Orderus($properties);
+        $enemy = new WildBeast($properties2);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setEnemy($enemy);
+        $game->setFirst();
+        $result = $game->getAttacker();
+        $name = $result->getName();
+        $this->assertEquals('Orderus', $name);
+
     }
 }

@@ -12,7 +12,7 @@ class Game {
     private object $defender;
 
     private object $orderus;
-    private object $wildBeast;
+    private object $enemy;
 
     private int $roundCount = 1;
     private object $winner;
@@ -20,8 +20,20 @@ class Game {
     public function __construct() 
     {
         $this->orderus = new player\Orderus();
-        $this->wildBeast = new player\WildBeast();
+        $this->enemy = new player\WildBeast();
         $this->setFirst();
+    }
+    public function setOrderus(object $orderus): void {
+        $this->orderus = $orderus;
+    }
+    public function getAttacker(): object {
+        return $this->attacker;
+    }
+    public function setEnemy(object $enemy): void {
+        $this->enemy = $enemy;
+    }
+    public function getDefender(): object {
+        return $this->defender;
     }
     public function displayFirst(): void {
          $this->displayMessage("{$this->attacker->getName()} will start");
@@ -50,7 +62,6 @@ class Game {
     }
     public function displayMessage(string $message): void {
         echo $message;
-        // echo '<br>';
     }
     public function displayResult(): void {
         if($this->isWinner()) {
@@ -61,7 +72,7 @@ class Game {
     }
     public function displayStatistics(): void{
         $this->orderus->displayStatistics();
-        $this->wildBeast->displayStatistics();
+        $this->enemy->displayStatistics();
     }
     public function displayRound(): void {
         echo "<h3>Round: {$this->roundCount}</h3>";
@@ -76,6 +87,7 @@ class Game {
      * @return void
      */
     public function attact(): void {
+
         $luck = $this->defender->getLuck();
         $generatedLuck = $this->defender::generateLuck();
 
@@ -83,7 +95,7 @@ class Game {
             $damage = $this->damage($this->attacker,$this->defender);
             $this->defender->hit($damage);
         } else {
-                $this->displayMessage('miss');
+            $this->displayMessage('miss');
         }
         
         $this->changeAttacker();
@@ -139,7 +151,7 @@ class Game {
      */
     public function setFirst(): void 
     {
-        $this->compareSpeed($this->orderus, $this->wildBeast);
+        $this->compareSpeed($this->orderus, $this->enemy);
     }
 
     
