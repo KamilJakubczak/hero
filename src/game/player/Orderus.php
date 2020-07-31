@@ -37,38 +37,50 @@ class Orderus extends Player {
         }
         $this->setProperties($properties);
     }
+    private function isSkillUsable(int $luck, int $chance) {
+        if($luck <= $chance) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function getDamage(): int {
 
-       $damage = $this->strength;
-       $damage += $this->rapidStrike();
+        $luck = $this->generateLuck();
+        $rapidStrikeChance = static::rapidStrikeChance;
+        $damage = $this->strength;
+        $useSkill = $this->isSkillUsable($luck, $rapidStrikeChance);
 
-       return $damage;
+        if($useSkill){
+            $damage += $this->rapidStrike();
+             $this->displaySkill('rapid strike');
+        }
+      
+        return $damage;
     }
     public function hit(int $damage): int {
-        $damage = $this->magicShield($damage);
+        $luck = $this->generateLuck();
+        $magicShieldChance = static::magicShieldChance;
+        $useSkill = $this->isSkillUsable($luck, $magicShieldChance);
+
+        if($useSkill){
+            $damage = $this->magicShield($damage);
+            $this->displaySkill('magic shield');
+        }
         $this->health -= $damage;
-       
         return $damage;
 
     }
     private function rapidStrike(): int {
-        if($this->generateLuck() <= static::rapidStrikeChance) {
-            $this->displaySkill('rapid strike');
-            return $this->strength;
-        } else {
-            return 0;
-            }
+           
+        return $this->strength;
     }
     private function magicShield($damage): int {
-        if(
-            $damage > 0
-            && $this->generateLuck() <= static::magicShieldChance) 
-        {
-            $this->displaySkill('magic shield');
+        if($damage > 0) {
             return round($damage/2,1);
         } else {
             return $damage;
-            }
+        }
     }
 
     private function displaySkill(string $skillName): void {

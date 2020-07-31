@@ -11,8 +11,6 @@ final class GameTest extends TestCase {
     
     public function setUp(): void {
         $this->game = new Game();
-        // $this->orderus = new Orderus();
-        // $this->wildBeast = new WildBeast();
     }
 
     /**

@@ -28,6 +28,7 @@ class Game {
         $this->enemy = new player\WildBeast();
         $this->setFirst();
     }    
+
     /**
      * setOrderus
      *
