@@ -91,20 +91,44 @@ class Game {
         {
             return false;
         }
-    }
+    }    
+
+    /**
+     * setWinner
+     *
+     * @return void
+     */
     public function setWinner(): void {
         if($this->attacker->getHealth() > 0) {
             $this->winner = $this->attacker;
         } else {
             $this->winner = $this->defender;
         }
-    }
+    }    
+    /**
+     * getWinner
+     *
+     * @return object
+     */
     public function getWinner(): object {
         return $this->winner;
-    }
+    }    
+
+    /**
+     * displayMessage
+     *
+     * @param  string $message
+     * @return void
+     */
     public function displayMessage(string $message): void {
         echo $message;
-    }
+    }    
+
+    /**
+     * displayResult
+     *
+     * @return void
+     */
     public function displayResult(): void {
         if($this->isWinner()) {
             $this->displayMessage("<h2>{$this->winner->getName()} has won.</h2>");
@@ -112,13 +136,31 @@ class Game {
             $this->displayMessage("<h2>There is no winner, the battle has riched 20 rounds.</h2>");
         }
     }
+    
+    /**
+     * displayStatistics
+     *
+     * @return void
+     */
     public function displayStatistics(): void{
         $this->orderus->displayStatistics();
         $this->enemy->displayStatistics();
     }
+    
+    /**
+     * displayRound
+     *
+     * @return void
+     */
     public function displayRound(): void {
         echo "<h3>Round: {$this->roundCount}</h3>";
     }
+    
+    /**
+     * displayAction
+     *
+     * @return void
+     */
     public function displayAction(): void {
         echo "{$this->attacker->getName()} attacks<br>";
     }
@@ -283,6 +325,9 @@ class Game {
     private function updateRoundCount(): void {
         $this->roundCount +=1;
     }    
+    public function setRoundCounter(int $count): void {
+        $this->roundCount = $count;
+    }
     /**
      * isWinner
      *

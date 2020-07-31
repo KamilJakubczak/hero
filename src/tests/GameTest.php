@@ -326,8 +326,10 @@ final class GameTest extends TestCase {
         $game->setOrderus($orderus);
         $game->setEnemy($enemy);
         $game->setFirst();
-        $result = $game->isFinished();
+        $result = $game->isWinner   ();
+        $winner = $game->getWinner()->getName();
         $this->assertTrue($result);
+        $this->assertEquals($winner, 'Orderus');
 
         $orderus = new Orderus($properties2);
         $enemy = new WildBeast($properties);
@@ -335,7 +337,74 @@ final class GameTest extends TestCase {
         $game->setOrderus($orderus);
         $game->setEnemy($enemy);
         $game->setFirst();
+        $result = $game->isWinner();
+        $winner = $game->getWinner()->getName();
+        $this->assertTrue($result);
+        $this->assertEquals($winner, 'Wild Beast');
+    }
+
+    public function testIsFinished(): void {
+        $properties = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        $properties2 = [
+            'health'=>[
+                'min'=>0,
+                'max'=>0
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        
+        $orderus = new Orderus($properties);
+        $enemy = new WildBeast($properties2);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setEnemy($enemy);
+        $game->setFirst();
         $result = $game->isFinished();
         $this->assertTrue($result);
+
+        
+    }
+
+    public function testIsFinishedBasedOnRoundCount(): void {
+        $this->game->setRoundCounter(21);
+        $result = $this->game->isFinished();
+        $this->assertTrue($result);
+
     }
 }
