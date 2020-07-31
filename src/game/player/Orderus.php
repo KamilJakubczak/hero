@@ -44,11 +44,11 @@ class Orderus extends Player {
 
        return $damage;
     }
-    public function hit(int $damage): void {
+    public function hit(int $damage): int {
         $damage = $this->magicShield($damage);
         $this->health -= $damage;
-        $this->displayMessage("{$this->name} has received {$damage} damage");
-        $this->displayMessage("{$this->name} has left {$this->health}HP");
+       
+        return $damage;
 
     }
     private function rapidStrike(): int {

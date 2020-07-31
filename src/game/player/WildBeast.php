@@ -28,7 +28,7 @@ class WildBeast extends Player {
         ]
     ];
 
-    public function __construct($properties=null) {
+    public function __construct(array $properties=null) {
         $this->name = self::name;
         if(is_null($properties)){
             $properties = self::properties;

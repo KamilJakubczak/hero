@@ -5,7 +5,6 @@ use HERO\game\player as player;
 
 final class PlayerTest extends TestCase {
 
-    private object $orderus;
   /**
      * Call protected/private method of a class.
      *
@@ -27,11 +26,33 @@ final class PlayerTest extends TestCase {
     //     $this->orderus = new O
     // }
 
-    // public function checkOrderusGotLuckyMiss(): void {
-    //     $generatedLuck = 20;
-    //     $damage = 20;
-    //     $orderus = new player\Orderus();
-    //     $result = $this->invokeMethod($orderus, 'gotLucky,')
-    //     $this->AssertEquals()
-    // }
+    public function testGettingHit(): void {
+        $properties = [
+            'health'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        $player = new player\WildBeast($properties);
+        $player->hit(50);
+        $this->assertEquals(50, $player->getHealth());
+
+    }
+
 }

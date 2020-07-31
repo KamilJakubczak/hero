@@ -174,10 +174,13 @@ class Game {
 
         $luck = $this->defender->getLuck();
         $generatedLuck = $this->defender::generateLuck();
-
+        $defenderName = $this->defender->getName();
+        $defenderHealth = $this->defender->getHealth();
         if(!$this->miss($luck, $generatedLuck)) {
             $damage = $this->damage($this->attacker,$this->defender);
-            $this->defender->hit($damage);
+            $damageTaken = $this->defender->hit($damage);
+            $this->displayMessage("{$defenderName} has received {$damageTaken} damage");
+            $this->displayMessage("{$defenderName} has left {$defenderHealth}HP");
         } else {
             $this->displayMessage('miss');
         }

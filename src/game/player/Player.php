@@ -33,49 +33,107 @@ abstract class Player implements iPlayer {
             'max'=>100
         ]
     ];
-
+    
+    /**
+     * getName
+     *
+     * @return string
+     */
     public function getName(): string {
         return $this->name;
-    }
+    }    
+    /**
+     * getLuck
+     *
+     * @return int
+     */
     public function getLuck():int {
         return $this->luck;
-    }
+    }    
+    /**
+     * getSpeed
+     *
+     * @return int
+     */
     public function getSpeed():int {
         return $this->speed;
-    }
+    }    
+    /**
+     * getStrength
+     *
+     * @return int
+     */
     public function getStrength():int {
         return $this->strength;
-    }
+    }    
+    /**
+     * getDefence
+     *
+     * @return int
+     */
     public function getDefence():int {
         return $this->defence;
-    }
+    }    
+    /**
+     * getHealth
+     *
+     * @return int
+     */
     public function getHealth():int {
         return $this->health;
-    }
+    }    
+    /**
+     * getDamage
+     *
+     * @return int
+     */
     public function getDamage(): int {
         return $this->strength;
-    }
-    public function hit(int $damage): void {
+    }    
+    /**
+     * hit
+     *
+     * @param  mixed $damage
+     * @return int
+     */
+    public function hit(int $damage): int {
         $this->health -= $damage;
-        $this->displayMessage("{$this->name} has received {$damage} damage");
-        $this->displayMessage("{$this->name} has left {$this->health}HP");
+        return $damage;
     }
-    
+        
+    /**
+     * displayStatistics
+     *
+     * @return void
+     */
     public function displayStatistics() {
         echo "<h2>{$this->name}</h2>";
         echo "<h3>Statistics:</h3>";
         foreach(static::properties as $name=>$values) {
             echo "      - {$name}: {$this->$name}<br>";
         }
-    }
-    protected function setProperties($properties) {
+    }    
+
+    /**
+     * setProperties
+     *
+     * @param  array $properties
+     * @return void
+     */
+    protected function setProperties(array $properties) {
         foreach($properties as $property=>$values) {
             $this->$property = rand($values['min'], $values['max']);
 
         }
     }
 
-
+    
+    /**
+     * displayMessage
+     *
+     * @param  mixed $message
+     * @return void
+     */
     protected function displayMessage(string $message): void {
         echo $message;
         echo '<br>';
