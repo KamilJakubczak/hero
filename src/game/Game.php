@@ -6,34 +6,168 @@ use HERO\game\player as player;
 
 class Game {
 
+    private const maxRound = 20;
+
     private object $attacker;
-    private object $defeneder;
+    private object $defender;
 
     private object $orderus;
     private object $wildBeast;
 
-    public function __construct() {
+    private int $roundCount = 1;
+    private object $winner;
+
+    public function __construct() 
+    {
         $this->orderus = new player\Orderus();
         $this->wildBeast = new player\WildBeast();
+        $this->setFirst();
+    }
+    public function displayFirst(): void {
+         $this->displayMessage("{$this->attacker->getName()} will start");
+    }
+    public function isFinished(): bool {
+        if(
+            $this->isWinner()
+            || $this->roundCount > static::maxRound
+        ) {
+            return true;
+        } 
+        else 
+        {
+            return false;
+        }
+    }
+    public function setWinner(): void {
+        if($this->attacker->getHealth() > 0) {
+            $this->winner = $this->attacker;
+        } else {
+            $this->winner = $this->defender;
+        }
+    }
+    public function getWinner(): object {
+        return $this->winner;
+    }
+    public function displayMessage(string $message): void {
+        echo $message;
+        // echo '<br>';
+    }
+    public function displayResult(): void {
+        if($this->isWinner()) {
+            $this->displayMessage("<h2>{$this->winner->getName()} has won.</h2>");
+        } else {
+            $this->displayMessage("<h2>There is no winner, the battle has riched 20 rounds.</h2>");
+        }
+    }
+    public function displayStatistics(): void{
+        $this->orderus->displayStatistics();
+        $this->wildBeast->displayStatistics();
+    }
+    public function displayRound(): void {
+        echo "<h3>Round: {$this->roundCount}</h3>";
+    }
+    public function displayAction(): void {
+        echo "{$this->attacker->getName()} attacks<br>";
+    }
+        
+    /**
+     * attact
+     *
+     * @return void
+     */
+    public function attact(): void {
+        $luck = $this->defender->getLuck();
+        $generatedLuck = $this->defender::generateLuck();
+
+        if(!$this->miss($luck, $generatedLuck)) {
+            $damage = $this->damage($this->attacker,$this->defender);
+            $this->defender->hit($damage);
+        } else {
+                $this->displayMessage('miss');
+        }
+        
+        $this->changeAttacker();
+        $this->updateRoundCount();
+        
+    }    
+    /**
+     * Check if player misses the attack if yes then return true
+     * if not false
+     *
+     * @param  mixed $defender
+     * @return bool
+     */
+    private function miss(int $luck, int $generatedLuck): bool {
+       $gotLucky = $this->checkLuck($luck, $generatedLuck);
+        if($gotLucky) {
+            return true;
+        } else {
+            return false;
+        }
+    }    
+    /**
+     * Check if player is lucky at current action
+     *
+     * @param  int $luck
+     * @param  int $generatedLuck
+     * @return bool
+     */
+    private function checkLuck(int $luck, int $generatedLuck): bool {
+        if($generatedLuck <= $luck) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
+    private function damage(object $attacker, object $defender): int {
+        $attack = $attacker->getDamage();
+        $defence = $defender->getDefence();
+         
+        $damage = $attack - $defence;
+        if($damage>0) {
+            return $damage;
+        } else {
+            return 0;
+        }
+    }
 
-    public function setFirst(): void {
+    /**
+     * Set first attacker
+     *
+     * @return void
+     */
+    public function setFirst(): void 
+    {
         $this->compareSpeed($this->orderus, $this->wildBeast);
     }
 
+    
+    /**
+     * compareSpeed
+     *
+     * @return void
+     */
     private function compareSpeed(
         object $player1, 
         object $player2): void 
     {
         if($player1->getSpeed() > $player2->getSpeed()) {
             $this->setAttacker($player1);
+            $this->setDefender($player2);
         } elseif($player1->getSpeed() < $player2->getSpeed()) {
             $this->setAttacker($player2);
+            $this->setDefender($player1);
         } else {
             $this->compareLuck($player1, $player2);
         }
     }
+  
+    /**
+     * compareLuck
+     *
+     * @return void
+     */
     private function compareLuck(
         object $player1, 
         object $player2): void 
@@ -41,18 +175,74 @@ class Game {
         if($player1->getLuck() > $player2->getLuck())
         {
             $this->setAttacker($player1);
+            $this->setDefender($player2);
         } 
         elseif($player1->getLuck() < $player2->getLuck())
         {
             $this->setAttacker($player2);
+            $this->setDefender($player1);
         } 
         else 
         {
             $this->setAttacker($player1);
+            $this->setDefender($player2);
         }
     }
-    private function setAttacker(object $player): void {
+
+    /**
+     * setAttacker
+     *
+     * @param  object $player
+     * @return void
+     */
+    private function setAttacker(object $player): void 
+    {
         $this->attacker = $player;
-        var_dump($this->attacker);
     }
+    
+    /**
+     * setDefender
+     *
+     * @param  mixed $plyer
+     * @return void
+     */
+    private function setDefender(object $player): void 
+    {
+        $this->defender = $player;
+    }
+    
+    /**
+     * changeAttacker
+     *
+     * @return void
+     */
+    private function changeAttacker(): void {
+        $temp = $this->defender;
+        $this->defender = $this->attacker;
+        $this->attacker = $temp;
+    }    
+    /**
+     * updateRoundCount
+     *
+     * @return void
+     */
+    private function updateRoundCount(): void {
+        $this->roundCount +=1;
+    }    
+    /**
+     * isWinner
+     *
+     * @return bool
+     */
+    public function isWinner(): bool {
+        if(
+            $this->attacker->getHealth() <= 0 
+            || $this->defender->getHealth() <=0 ) {
+                $this->setWinner();
+                return true;
+            } else {
+                return false;
+            }
+    }
+
 }

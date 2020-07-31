@@ -27,9 +27,52 @@ class Orderus extends Player {
             'max'=>30
         ]
     ];
+    private const rapidStrikeChance = 10;
+    private const magicShieldChance = 20;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($properties=null) {
+        $this->name = self::name;
+        if(is_null($properties)){
+            $properties = self::properties;
+        }
+        $this->setProperties($properties);
+    }
+    public function getDamage(): int {
+
+       $damage = $this->strength;
+       $damage += $this->rapidStrike();
+
+       return $damage;
+    }
+    public function hit(int $damage): void {
+        $damage = $this->magicShield($damage);
+        $this->health -= $damage;
+        $this->displayMessage("{$this->name} has received {$damage} damage");
+        $this->displayMessage("{$this->name} has left {$this->health}HP");
+
+    }
+    private function rapidStrike(): int {
+        if($this->generateLuck() <= static::rapidStrikeChance) {
+            $this->displaySkill('rapid strike');
+            return $this->strength;
+        } else {
+            return 0;
+            }
+    }
+    private function magicShield($damage): int {
+        if(
+            $damage > 0
+            && $this->generateLuck() <= static::magicShieldChance) 
+        {
+            $this->displaySkill('magic shield');
+            return round($damage/2,1);
+        } else {
+            return $damage;
+            }
+    }
+
+    private function displaySkill(string $skillName): void {
+        echo "{$this->name} has used {$skillName}<br>";
     }
 }
 

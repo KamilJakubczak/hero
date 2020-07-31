@@ -28,8 +28,12 @@ class WildBeast extends Player {
         ]
     ];
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($properties=null) {
+        $this->name = self::name;
+        if(is_null($properties)){
+            $properties = self::properties;
+        }
+        $this->setProperties($properties);
     }
 }
 
