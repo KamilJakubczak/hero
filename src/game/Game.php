@@ -16,28 +16,70 @@ class Game {
 
     private int $roundCount = 1;
     private object $winner;
-
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct() 
     {
         $this->orderus = new player\Orderus();
         $this->enemy = new player\WildBeast();
         $this->setFirst();
-    }
+    }    
+    /**
+     * setOrderus
+     *
+     * @param  object $orderus
+     * @return void
+     */
     public function setOrderus(object $orderus): void {
         $this->orderus = $orderus;
-    }
+    }    
+
+    /**
+     * getAttacker
+     *
+     * @return object
+     */
     public function getAttacker(): object {
         return $this->attacker;
-    }
+    }    
+
+    /**
+     * setEnemy
+     *
+     * @param  object $enemy
+     * @return void
+     */
     public function setEnemy(object $enemy): void {
         $this->enemy = $enemy;
     }
+    
+    /**
+     * getDefender
+     *
+     * @return object
+     */
     public function getDefender(): object {
         return $this->defender;
     }
+    
+    /**
+     * displayFirst
+     *
+     * @return void
+     */
     public function displayFirst(): void {
          $this->displayMessage("{$this->attacker->getName()} will start");
     }
+    
+    /**
+     * Check if game is finished
+     *
+     * @return bool
+     */
     public function isFinished(): bool {
         if(
             $this->isWinner()

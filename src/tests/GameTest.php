@@ -273,4 +273,69 @@ final class GameTest extends TestCase {
         $this->assertEquals('Orderus', $name);
 
     }
+
+    public function testIsWinner(): void {
+        $properties = [
+            'health'=>[
+                'min'=>70,
+                'max'=>100
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        $properties2 = [
+            'health'=>[
+                'min'=>0,
+                'max'=>0
+            ],
+            'strength'=>[
+                'min'=>70,
+                'max'=>80
+            ],
+            'defence'=>[
+                'min'=>45,
+                'max'=>55
+            ],
+            'speed'=>[
+                'min'=>100,
+                'max'=>100
+            ],
+            'luck'=>[
+                'min'=>0,
+                'max'=>0
+            ]
+        ];
+        
+        $orderus = new Orderus($properties);
+        $enemy = new WildBeast($properties2);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setEnemy($enemy);
+        $game->setFirst();
+        $result = $game->isFinished();
+        $this->assertTrue($result);
+
+        $orderus = new Orderus($properties2);
+        $enemy = new WildBeast($properties);
+        $game = new Game();
+        $game->setOrderus($orderus);
+        $game->setEnemy($enemy);
+        $game->setFirst();
+        $result = $game->isFinished();
+        $this->assertTrue($result);
+    }
 }
