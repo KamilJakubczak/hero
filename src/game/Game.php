@@ -181,9 +181,10 @@ class Game {
             $damage = $this->damage($this->attacker,$this->defender);
             $damageTaken = $this->defender->hit($damage);
             $this->displayMessage("{$defenderName} has received {$damageTaken} damage");
+            $this->displayMessage("<br>");
             $this->displayMessage("{$defenderName} has left {$defenderHealth}HP");
         } else {
-            $this->displayMessage('miss');
+            $this->displayMessage('Miss');
         }
         
         $this->changeAttacker();

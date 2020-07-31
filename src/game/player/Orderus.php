@@ -58,7 +58,7 @@ class Orderus extends Player {
       
         return $damage;
     }
-    public function hit(int $damage): int {
+    public function hit(int $damage): float {
         $luck = $this->generateLuck();
         $magicShieldChance = static::magicShieldChance;
         $useSkill = $this->isSkillUsable($luck, $magicShieldChance);
@@ -75,9 +75,9 @@ class Orderus extends Player {
            
         return $this->strength;
     }
-    private function magicShield($damage): int {
+    private function magicShield(int $damage): float {
         if($damage > 0) {
-            return round($damage/2,1);
+            return $damage/2;
         } else {
             return $damage;
         }

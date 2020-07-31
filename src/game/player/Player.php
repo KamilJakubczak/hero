@@ -79,7 +79,7 @@ abstract class Player implements iPlayer {
      *
      * @return int
      */
-    public function getHealth():int {
+    public function getHealth():float {
         return $this->health;
     }    
     /**
@@ -96,7 +96,7 @@ abstract class Player implements iPlayer {
      * @param  mixed $damage
      * @return int
      */
-    public function hit(int $damage): int {
+    public function hit(int $damage): float {
         $this->health -= $damage;
         return $damage;
     }

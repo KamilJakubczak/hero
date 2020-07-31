@@ -22,10 +22,12 @@ final class PlayerTest extends TestCase {
 
         return $method->invokeArgs($object, $parameters);
     }
-    // public function setUp(): void {
-    //     $this->orderus = new O
-    // }
-
+    
+    /**
+     * testGettingHit
+     *
+     * @return void
+     */
     public function testGettingHit(): void {
         $properties = [
             'health'=>[
@@ -54,5 +56,4 @@ final class PlayerTest extends TestCase {
         $this->assertEquals(50, $player->getHealth());
 
     }
-
 }

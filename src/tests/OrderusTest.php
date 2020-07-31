@@ -6,7 +6,12 @@ use HERO\game\player as player;
 final class OrderusTest extends TestCase {
 
     public object $orderus;
-    
+        
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp(): void {
         $this->orderus = new player\Orderus();
     }
@@ -27,14 +32,24 @@ final class OrderusTest extends TestCase {
 
         return $method->invokeArgs($object, $parameters);
     }
-
+    
+    /**
+     * testMagicShield
+     *
+     * @return void
+     */
     public function testMagicShield(): void {
         $player = new player\Orderus();
-        $result = $this->invokeMethod($player, 'magicShield', array(50));
-        $this->assertEquals(25, $result);
+        $result = $this->invokeMethod($player, 'magicShield', array(11));
+        $this->assertEquals(5.5, $result);
 
     }
-
+    
+    /**
+     * testRapidStrike
+     *
+     * @return void
+     */
     public function testRapidStrike(): void {
         $properties = [
             'health'=>[
@@ -63,7 +78,12 @@ final class OrderusTest extends TestCase {
         $this->assertEquals(50, $result);
 
     }
-
+    
+    /**
+     * testisSkillUsableTrue
+     *
+     * @return void
+     */
     public function testisSkillUsableTrue(): void {
         $params = [
             'luck'=>20,
@@ -72,7 +92,12 @@ final class OrderusTest extends TestCase {
         $result =  $this->invokeMethod($this->orderus, 'isSkillUsable', $params);
         $this->assertTrue($result);
     }
-
+    
+    /**
+     * testisSkillUsableFalse
+     *
+     * @return void
+     */
     public function testisSkillUsableFalse(): void {
         $params = [
             'luck'=>21,

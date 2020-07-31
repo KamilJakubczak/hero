@@ -8,7 +8,12 @@ use HERO\game\player\WildBeast;
 final class GameTest extends TestCase {
     
     public object $game;
-    
+        
+    /**
+     * setUp
+     *
+     * @return void
+     */
     public function setUp(): void {
         $this->game = new Game();
     }
@@ -30,7 +35,12 @@ final class GameTest extends TestCase {
 
         return $method->invokeArgs($object, $parameters);
     }
-
+    
+    /**
+     * testLuckTrue
+     *
+     * @return void
+     */
     public function testLuckTrue(): void {
         $params = [
             'luck'=>20,
@@ -39,7 +49,12 @@ final class GameTest extends TestCase {
         $result = $this->invokeMethod($this->game, 'checkLuck', $params);
         $this->assertTrue($result);
     }
-
+    
+    /**
+     * testLuckFalse
+     *
+     * @return void
+     */
     public function testLuckFalse(): void {
         $params = [
             'luck'=>20,
@@ -48,7 +63,12 @@ final class GameTest extends TestCase {
         $result = $this->invokeMethod($this->game, 'checkLuck', $params);
         $this->assertFalse($result);
     }
-
+    
+    /**
+     * testMissTrue
+     *
+     * @return void
+     */
     public function testMissTrue(): void {
         $params = [
             'luck'=>20,
@@ -57,7 +77,12 @@ final class GameTest extends TestCase {
         $result = $this->invokeMethod($this->game, 'miss', $params);
         $this->assertTrue($result);
     }
-
+    
+    /**
+     * testMissFalse
+     *
+     * @return void
+     */
     public function testMissFalse(): void {
         $params = [
             'luck'=>20,
@@ -67,7 +92,12 @@ final class GameTest extends TestCase {
         $this->assertFalse($result);
        
     }
-
+    
+    /**
+     * testMissNotfication
+     *
+     * @return void
+     */
     public function testMissNotfication(): void {
         $properties = [
             'health'=>[
@@ -97,9 +127,14 @@ final class GameTest extends TestCase {
         $game->setFirst();
         $game->attact();
 
-        $this->expectOutputString('miss');
+        $this->expectOutputString('Miss');
     }
-
+    
+    /**
+     * testSetFirstAttackerBasedOnSpeed
+     *
+     * @return void
+     */
     public function testSetFirstAttackerBasedOnSpeed(): void {
         $properties = [
             'health'=>[
@@ -157,6 +192,12 @@ final class GameTest extends TestCase {
         $this->assertEquals('Orderus', $name);
 
     }
+        
+    /**
+     * testSetFirstAttackerBasedOnLuck
+     *
+     * @return void
+     */
     public function testSetFirstAttackerBasedOnLuck(): void {
         $properties = [
             'health'=>[
@@ -214,6 +255,12 @@ final class GameTest extends TestCase {
         $this->assertEquals('Wild Beast', $name);
 
     }
+        
+    /**
+     * testSetFirstAttackerWhenDraw
+     *
+     * @return void
+     */
     public function testSetFirstAttackerWhenDraw(): void {
         $properties = [
             'health'=>[
@@ -271,7 +318,12 @@ final class GameTest extends TestCase {
         $this->assertEquals('Orderus', $name);
 
     }
-
+    
+    /**
+     * testIsWinner
+     *
+     * @return void
+     */
     public function testIsWinner(): void {
         $properties = [
             'health'=>[
@@ -340,7 +392,12 @@ final class GameTest extends TestCase {
         $this->assertTrue($result);
         $this->assertEquals($winner, 'Wild Beast');
     }
-
+    
+    /**
+     * testIsFinished
+     *
+     * @return void
+     */
     public function testIsFinished(): void {
         $properties = [
             'health'=>[
@@ -398,7 +455,12 @@ final class GameTest extends TestCase {
 
         
     }
-
+    
+    /**
+     * testIsFinishedBasedOnRoundCount
+     *
+     * @return void
+     */
     public function testIsFinishedBasedOnRoundCount(): void {
         $this->game->setRoundCounter(21);
         $result = $this->game->isFinished();
