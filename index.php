@@ -11,7 +11,6 @@ while(!$game->isFinished()){
     $game->displayRound();
     $game->displayAction();
     $game->attact();
-    // $game->displayStatistics();
 }
 $game->displayResult();
 
